@@ -17,7 +17,7 @@ make install
 ```
 
 ### Python
-Before building the Python wrapper, the C++ library needs to be built. Then The Python wrapper can be built and installed, i.e.
+Before building the Python wrapper, the C++ library needs to be built. Then, the Python wrapper can be built and installed, i.e.
 ```
 cmake .
 make
