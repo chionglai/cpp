@@ -8,6 +8,7 @@
 set(LIB_NAME lcc)
 set(LIB_DESC "LCC C++ libraries")
 set(LIB_VER 0.0.1)
+set(EXTRA_COMPILE_FLAG "-std=c++11")
 file(GLOB PUBLIC_HEADER_FILES inc/*.h)
 
 # END setup - Do not modify pass this line
@@ -20,6 +21,10 @@ cmake_minimum_required(VERSION 3.9)
 
 # Project info
 project(${LIB_NAME} VERSION ${LIB_VER} DESCRIPTION ${LIB_DESC})
+
+# Set additional compile flag for both C and C++
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EXTRA_COMPILE_FLAG}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EXTRA_COMPILE_FLAG}")
 
 # Change default install prefix
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -36,7 +41,7 @@ add_library(${LIB_STATIC} STATIC $<TARGET_OBJECTS:objsrc>)
 # Set properties for static library
 set_target_properties(${LIB_STATIC} PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib  # Output of compiled library
-    PUBLIC_HEADER ${PUBLIC_HEADER_FILES}                # List of public header files
+    PUBLIC_HEADER "${PUBLIC_HEADER_FILES}"              # List of public header files
     VERSION ${PROJECT_VERSION}                          # Version number
 )
 
@@ -46,7 +51,7 @@ add_library(${LIB_SHARED} SHARED $<TARGET_OBJECTS:objsrc>)
 # Set properties for shared library
 set_target_properties(${LIB_SHARED} PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib
-    PUBLIC_HEADER ${PUBLIC_HEADER_FILES}
+    PUBLIC_HEADER "${PUBLIC_HEADER_FILES}"
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
 )
@@ -62,7 +67,6 @@ include(GNUInstallDirs)
 install(TARGETS ${LIB_STATIC}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-
 
 # Declare files to install for shared library
 install(TARGETS ${LIB_SHARED}
