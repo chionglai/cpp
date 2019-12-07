@@ -8,7 +8,9 @@
 #include <string>
 
 namespace lcc {
-    std::string hello (int a);
-}
+
+std::string hello (int a);
+
+}   // namespace lcc
 
 #endif // __HELLO_H
